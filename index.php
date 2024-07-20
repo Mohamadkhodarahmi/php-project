@@ -24,7 +24,7 @@
     ?>
     <div class="">
         <div>
-            <form method="POST" action="/account/index.php">
+            <form method="POST" action="/account">
                 <div class="row pb-2">
                     <div class="col">
                         <input type="text" class="form-control" placeholder="User name" name="username">
