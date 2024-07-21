@@ -1,3 +1,6 @@
+
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,11 +16,12 @@
 <body>
 <div class="container">
     <?php
-    if ($_COOKIE['error']==1):
-        setcookie('error', 0);
+    session_start();
+    if (isset($_COOKIE['wrong'])):
+
         ?>
         <div class="alert alert-danger">
-            wrong password
+            <?= $_COOKIE['wrong'] ?>
         </div>
     <?php
     endif;
@@ -39,6 +43,7 @@
             </form>
         </div>
     </div>
+
 
 </body>
 </html>

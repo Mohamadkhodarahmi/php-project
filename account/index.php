@@ -1,26 +1,22 @@
 <?php
+require_once __DIR__ . '/../config.php';
 
 $hasError = false;
-$jsonUser = file_get_contents('../users.json');
-
-$json_data = json_decode($jsonUser, true);
-
-$founded = array_search($_POST['username'],array_column($json_data,'username'));
+$json_data = require_once __DIR__ . "/../users.php";
 
 
-if ($_POST['password'] == $json_data[$founded]['pass'] ) {
-        setcookie('loggedin', 1);
-        header('Location: ../login');
-        die;
+$founded = array_search($_POST['username'], array_column($json_data, 'username'));
+
+setcookie('username', $json_data[$founded]['username']);
+
+if ($_POST['password'] == $json_data[$founded]['pass']) {
+    setcookie("login", 'wellcome');
+    redirect();
 }
 else {
-    $hasError = true;
-    setcookie('loggedin', 0);
-
-}
-
-if ($hasError){
-    setcookie('error', 1);
-    header('Location:http://127.0.0.1:8888/index.php');
+    setcookie("wrong" , "wrong password", time() + 3, "/");
+    header("Location:../index.php");
     die;
+
 }
+
