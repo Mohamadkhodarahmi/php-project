@@ -1,14 +1,23 @@
 <?php
-$json_data = require_once __DIR__ . "/../../tasks.json";
+session_start();
+$content = file_get_contents(__DIR__ . "/../../tasks.json");
+
+$task_data = json_decode($content, true);
+
+$foundedIndex = array_search($_POST['username'], array_column($task_data, 'username'));
 
 
-$task_data= json_encode($json_data);
 
-//$content =file_get_contents($json_data);
-//print_r($content);
+$newTask = [
+    "{$_POST['task']}",
+];
 
-//$founded = array_search($_POST['username'], array_column($json_data, 'username'));
-//
-//$newData = array_push($json_data[$founded]['tasks'],"task3","task2") ;
-//
-//file_put_contents("/../../users.php", $newData);
+
+$task_data[$foundedIndex]['tasks'] = array_merge($task_data[$foundedIndex]['tasks'], $newTask);
+//array_push($task_data[$founded]['tasks'],$newTask) ;
+
+
+file_put_contents(__DIR__ . "/../../tasks.json", json_encode($task_data));
+print_r($task_data[$foundedIndex]['tasks']);
+$_SESSION['tasks'] = $task_data[$foundedIndex]['tasks'];
+header('Location: ./index.php');

@@ -1,4 +1,5 @@
 <?php
+session_start();
 $users =require_once __DIR__."/../../users.php";
 
 
@@ -22,12 +23,29 @@ if (isset($_COOKIE['login'])):
 			<input id="new-task" type="text" name="task">
 			<button>Add Task</button>
 		</form>
-		<h3 class="middle">Todo</h3>
-		<ul id="incomplete-tasks">
+        <form >
+		<h3 class="middle" >Todo</h3>
+		<ul id="incomplete-tasks" >
+            <?php
+
+           foreach ($_SESSION['tasks'] as $task):
+
+
+            ?>
+
+           <br/><input type="checkbox" >
+
+               <?= $task?>
+               <?php
+           endforeach;
+               ?>
 		</ul>
+        </form>
+        <form>
 		<h3 class="middle">Completed Tasks</h3>
 		<ul id="completed-tasks">
 		</ul>
+        </form>
 	</div>
 	<script type="text/javascript" src="../../main.js"></script>
 
